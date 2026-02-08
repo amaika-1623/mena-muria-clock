@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>MENA MURIA Ceremonial Clock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background-color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      color: gold;
+    }
+
+    #intro, #clock {
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      max-width: 100%;
+      height: auto;
+      position: absolute;
+    }
+
+    #clock {
+      z-index: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #intro {
+      z-index: 0;
+      top: 0;
+      left: 0;
+    }
+
+    #ceremonialBanner {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      color: #b57a3c;
+      text-shadow:
+        0 0 6px rgba(181, 122, 60, 0.9),
+        0 0 12px rgba(181, 122, 60, 0.6);
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    #timeDisplay {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: bold;
+      text-shadow:
+        0 0 8px rgba(255, 215, 0, 0.9),
+        0 0 15px rgba(255, 215, 0, 0.6);
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    #dateDisplay {
+      position: absolute;
+      bottom: 60px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      text-shadow:
+        0 0 6px rgba(255, 215, 0, 0.8),
+        0 0 10px rgba(255, 215, 0, 0.5);
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    #handsContainer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60vmin;
+      height: 60vmin;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .hand {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      transform-origin: 50% 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    #centerPin {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f5d28a, #8b5a2b);
+      box-shadow:
+        0 0 6px rgba(245, 210, 138, 0.9),
+        0 0 12px rgba(245, 210, 138, 0.7);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 6;
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.15); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="ceremonialBanner">MENA&nbsp;&nbsp;&nbsp;MURIA</div>
+  <div id="dateDisplay"></div>
+  <div id="timeDisplay"></div>
+
+  <audio id="tifa" src="assets/tifa.mp3" preload="auto"></audio>
+  <img id="intro" src="assets/intro.jpg" alt="Ceremonial Intro">
+  <img id="clock" src="assets/clockface.jpg" alt="Mena Muria Clock">
+
+  <div id="handsContainer">
+
+    <!-- HOUR HAND (A: straight spearhead) -->
+    <svg id="hourHand" class="hand" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="3" fill="#8b6a3c" />
+      <path
+        d="M50 50 L48 35 L50 25 L52 35 Z"
+        fill="#d4b06a"
+        stroke="#8b6a3c"
+        stroke-width="1"
+        stroke-linejoin="round"
+      />
+    </svg>
+
+    <!-- MINUTE HAND (1: thick spine + long needle tip) -->
+    <svg id="minuteHand" class="hand" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="2.6" fill="#8b6a3c" />
+      <path
+        d="M50 50 L49 20 L50 10 L51 20 Z"
+        fill="#d4b06a"
+        stroke="#8b6a3c"
+        stroke-width="1"
+        stroke-linejoin="round"
+      />
+    </svg>
+
+    <!-- SECOND HAND -->
+    <svg id="secondHand" class="hand" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="1.8" fill="#b57a3c" />
+      <path
+        d="M50 51 L50 16"
+        stroke="#b57a3c"
+        stroke-width="0.8"
+        stroke-linecap="round"
+      />
+      <circle cx="50" cy="57" r="1.4" fill="#b57a3c" />
+    </svg>
+
+    <div id="centerPin"></div>
+  </div>
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+      const minuteDeg = minutes * 6 + seconds * 0.1;
+      const secondDeg = seconds * 6;
+
+      document.getElementById('hourHand').style.transform =
+        `translate(-50%, -50%) rotate(${hourDeg}deg)`;
+      document.getElementById('minuteHand').style.transform =
+        `translate(-50%, -50%) rotate(${minuteDeg}deg)`;
+      document.getElementById('secondHand').style.transform =
+        `translate(-50%, -50%) rotate(${secondDeg}deg)`;
+
+      const hh = String(hours).padStart(2, '0');
+      const mm = String(minutes).padStart(2, '0');
+      const ss = String(seconds).padStart(2, '0');
+      document.getElementById('timeDisplay').textContent = `${hh}:${mm}:${ss}`;
+
+      const dagen = ['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+      const maanden = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+      const dagNaam = dagen[now.getDay()];
+      const dag = now.getDate();
+      const maandNaam = maanden[now.getMonth()];
+      const jaar = now.getFullYear();
+      document.getElementById('dateDisplay').textContent =
+        `${dagNaam} ${dag} ${maandNaam} ${jaar}`;
+    }
+
+    window.onload = () => {
+      document.getElementById('intro').style.opacity = 1;
+
+      setTimeout(() => {
+        const tifa = document.getElementById('tifa');
+        if (tifa) {
+          tifa.play().catch(() => {});
+        }
+        document.getElementById('clock').style.opacity = 1;
+        document.getElementById('timeDisplay').style.opacity = 1;
+        document.getElementById('dateDisplay').style.opacity = 1;
+        document.getElementById('ceremonialBanner').style.opacity = 1;
+      }, 500);
+
+      updateTime();
+      setInterval(updateTime, 1000);
+    };
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker registered"))
+    .catch((error) => console.log("Service Worker error:", error));
+}
+
+  </script>
+
+</body>
+</html>
