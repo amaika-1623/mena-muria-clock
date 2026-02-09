@@ -1,103 +1,55 @@
 body {
-  background-color: black;
-  color: white;
-  font-family: sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-
-#timeDisplay {
-  position: absolute;
-  bottom: 35px;
-  width: 100%;
-  text-align: center;
-  font-size: 2.4rem;
-  color: gold;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-shadow:
-    0 0 8px rgba(255, 215, 0, 0.9),
-    0 0 15px rgba(255, 215, 0, 0.6);
-  z-index: 3;
-  opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+    margin: 0;
+    padding: 0;
+    background: black;
+    overflow: hidden;
+    font-family: sans-serif;
 }
 
+/* Intro screen full screen */
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1.5s ease;
+    z-index: 10;
 }
 
-#clockContainer {
-  animation: fadeIn 3s ease-in-out;
+.intro-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Clock container */
+.clock-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
 }
 
-#analogClock {
-  width: 280px;
-  height: 280px;
-  margin: 0 auto;
-  background: url('assets/clockface.jpg');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 50%;
-  position: relative;
+.clock-face {
+    position: absolute;
+    width: 90vw;
+    max-width: 500px;
 }
 
-.hand {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: bottom center;
-  transform: translate(-50%, -100%);
-}
-
-#hourHand {
-  width: 35%;
-  height: 6px;
-  background: gold;
-  border-radius: 3px;
-}
-
-#minuteHand {
-  width: 45%;
-  height: 4px;
-  background: gold;
-  border-radius: 2px;
-}
-
-#secondHand {
-  width: 50%;
-  height: 2px;
-  background: gold;
-  border-radius: 2px;
-  box-shadow: 0 0 6px gold;
-}
-
-#centerPin {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  background: gold;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 6px gold;
-  z-index: 10;
-}
-
-#introBlessing {
-  opacity: 0;
-  margin-top: 20px;
-  font-size: 1.1rem;
-  color: gold;
-  animation: blessingFade 4s ease-in-out 1s forwards;
-}
-
-@keyframes blessingFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+#clockCanvas {
+    position: absolute;
+    width: 90vw;
+    height: 90vw;
+    max-width: 500px;
+    max-height: 500px;
 }
