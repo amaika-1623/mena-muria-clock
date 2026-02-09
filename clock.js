@@ -1,41 +1,68 @@
+const canvas = document.getElementById("clockCanvas");
+const ctx = canvas.getContext("2d");
 
-function updateClock() {
-    const now = new Date();
-
-    const h = now.getHours().toString().padStart(2, '0');
-    const m = now.getMinutes().toString().padStart(2, '0');
-    const s = now.getSeconds().toString().padStart(2, '0');
-    document.getElementById("digitalClock").textContent = `${h}:${m}:${s}`;
-
-    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    document.getElementById("dateDisplay").textContent = now.toLocaleDateString('nl-NL', options);
-
-    const secDeg = now.getSeconds() * 6;
-    const minDeg = now.getMinutes() * 6 + now.getSeconds() * 0.1;
-    const hourDeg = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
-
-    document.getElementById("secondHand").style.transform = `rotate(${secDeg}deg)`;
-    document.getElementById("minuteHand").style.transform = `rotate(${minDeg}deg)`;
-    document.getElementById("hourHand").style.transform = `rotate(${hourDeg}deg)`;
+// Canvas automatisch laten passen op de CSS-grootte
+function resizeCanvas() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
 }
-// Optional: ceremonial sound
-const audio = new Audio('assets/tifa.mp3');
-window.addEventListener('load', () => {
-  audio.play().catch(() => {
-    console.log("Autoplay blocked");
-  });
-});
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
-// Optional soft gong intro
-const gong = new Audio('assets/gong.mp3');
+function drawClock() {
+    const now = new Date();
+    const w = canvas.width;
+    const h = canvas.height;
+    const radius = Math.min(w, h) / 2;
 
-window.addEventListener('load', () => {
-  gong.volume = 0.6; // gentle
-  gong.play().catch(() => {
-    console.log("Autoplay blocked");
-  });
-});
+    ctx.clearRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate(w / 2, h / 2);
 
+    // Uurwijzer
+    let hour = now.getHours() % 12;
+    let minute = now.getMinutes();
+    let second = now.getSeconds();
+    let hourAngle = (Math.PI / 6) * hour + (Math.PI / 360) * minute;
 
-setInterval(updateClock, 1000);
-updateClock();
+    ctx.lineWidth = radius * 0.07;
+    ctx.strokeStyle = "white";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(
+        Math.sin(hourAngle) * radius * 0.5,
+        -Math.cos(hourAngle) * radius * 0.5
+    );
+    ctx.stroke();
+
+    // Minuutwijzer
+    let minuteAngle = (Math.PI / 30) * minute + (Math.PI / 1800) * second;
+
+    ctx.lineWidth = radius * 0.05;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(
+        Math.sin(minuteAngle) * radius * 0.75,
+        -Math.cos(minuteAngle) * radius * 0.75
+    );
+    ctx.stroke();
+
+    // Secondewijzer
+    let secondAngle = (Math.PI / 30) * second;
+
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = radius * 0.02;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(
+        Math.sin(secondAngle) * radius * 0.85,
+        -Math.cos(secondAngle) * radius * 0.85
+    );
+    ctx.stroke();
+
+    ctx.restore();
+}
+
+// Elke seconde opnieuw tekenen
+setInterval(drawClock, 1000);
+drawClock();
