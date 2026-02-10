@@ -10,11 +10,10 @@ resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 // Antieke wijzerstijl
-function drawHand(angle, length, width, color) {
+function drawHand(angle, length, width) {
     ctx.save();
     ctx.rotate(angle);
 
-    // Antieke vorm: brede basis → smalle punt
     ctx.beginPath();
     ctx.moveTo(-width * 0.4, 0);
     ctx.lineTo(width * 0.4, 0);
@@ -23,21 +22,18 @@ function drawHand(angle, length, width, color) {
     ctx.lineTo(-width * 0.2, -length * 0.7);
     ctx.closePath();
 
-    // Gouden antieke stijl
     const gradient = ctx.createLinearGradient(0, 0, 0, -length);
     gradient.addColorStop(0, "#b38b2a");
     gradient.addColorStop(0.5, "#d4af37");
     gradient.addColorStop(1, "#f7e7a1");
 
     ctx.fillStyle = gradient;
-
-    // Schaduw
     ctx.shadowColor = "rgba(0,0,0,0.6)";
     ctx.shadowBlur = 10;
 
     ctx.fill();
-    ctx.restore();   // ← DIT WAS JE VERGETEN
-}                    // ← EN DIT OOK
+    ctx.restore();
+}
 
 // Digitale klok
 function updateDigitalClock() {
@@ -53,8 +49,33 @@ function updateDigitalClock() {
     }
 }
 
-// update elke seconde
-setInterval(updateDigitalClock, 1000);
+// ANALOGE KLOK — DIT MISSTE JE
+function drawClock() {
+    const now = new Date();
 
-// direct starten
+    const sec = now.getSeconds();
+    const min = now.getMinutes();
+    const hr = now.getHours() % 12;
+
+    const secAngle = (Math.PI / 30) * sec;
+    const minAngle = (Math.PI / 30) * min + (Math.PI / 1800) * sec;
+    const hrAngle = (Math.PI / 6) * hr + (Math.PI / 360) * min;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+
+    drawHand(hrAngle, canvas.height * 0.22, 14);
+    drawHand(minAngle, canvas.height * 0.32, 10);
+    drawHand(secAngle, canvas.height * 0.38, 4);
+
+    ctx.restore();
+
+    requestAnimationFrame(drawClock);
+}
+
+// Start alles
 updateDigitalClock();
+setInterval(updateDigitalClock, 1000);
+requestAnimationFrame(drawClock);
