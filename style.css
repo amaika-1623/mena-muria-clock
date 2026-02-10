@@ -64,5 +64,5 @@ body {
     color: white;
     font-weight: bold;
     text-shadow: 0 0 10px black;
-    z-index: 5;
+    z-index: 10;
 }
