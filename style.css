@@ -26,6 +26,26 @@ body {
     height: 100%;
     object-fit: cover;
 }
+.digital-time {
+    position: absolute;
+    bottom: 5vh;
+    width: 100%;
+    text-align: center;
+    font-size: 6vw;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 10px black;
+    z-index: 10;
+}
+#clockCanvas {
+    position: absolute;
+    width: 90vw;
+    height: 90vw;
+    max-width: 500px;
+    max-height: 500px;
+    z-index: 3;
+}
+
 
 /* Clock container */
 .clock-container {
@@ -55,6 +75,15 @@ body {
     max-height: 500px;
     z-index: 3;
 }
+.clock-face {
+    position: absolute;
+    width: 90vw;
+    max-width: 500px;
+    z-index: 2;
+}
+
+
+
 .digital-time {
     position: absolute;
     bottom: 5vh;
