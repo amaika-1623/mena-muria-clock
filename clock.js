@@ -9,29 +9,58 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-// Antieke wijzerstijl
+// Ceremoniële wijzerstijl (breed, goud, omlijning, glans)
 function drawHand(angle, length, width) {
     ctx.save();
     ctx.rotate(angle);
 
+    // Ceremoniële vorm: brede basis → smalle punt
     ctx.beginPath();
-    ctx.moveTo(-width * 0.4, 0);
-    ctx.lineTo(width * 0.4, 0);
-    ctx.lineTo(width * 0.2, -length * 0.7);
+    ctx.moveTo(-width * 0.55, 0);
+    ctx.lineTo(width * 0.55, 0);
+    ctx.lineTo(width * 0.28, -length * 0.72);
     ctx.lineTo(0, -length);
-    ctx.lineTo(-width * 0.2, -length * 0.7);
+    ctx.lineTo(-width * 0.28, -length * 0.72);
     ctx.closePath();
 
+    // Diepe ceremoniële goud-gradient
     const gradient = ctx.createLinearGradient(0, 0, 0, -length);
-    gradient.addColorStop(0, "#b38b2a");
-    gradient.addColorStop(0.5, "#d4af37");
-    gradient.addColorStop(1, "#f7e7a1");
+    gradient.addColorStop(0, "#7a5a18");   // diep oud goud
+    gradient.addColorStop(0.25, "#b88e2f"); // warm goud
+    gradient.addColorStop(0.55, "#e8c96a"); // glans
+    gradient.addColorStop(1, "#fff7d1");   // highlight
 
     ctx.fillStyle = gradient;
-    ctx.shadowColor = "rgba(0,0,0,0.6)";
-    ctx.shadowBlur = 10;
+
+    // Gouden omlijning
+    ctx.strokeStyle = "#f5e3a1";
+    ctx.lineWidth = 2.2;
+
+    // Schaduw voor diepte
+    ctx.shadowColor = "rgba(0,0,0,0.55)";
+    ctx.shadowBlur = 14;
 
     ctx.fill();
+    ctx.stroke();
+
+    // Glanslaag (3D highlight)
+    ctx.save();
+    ctx.globalAlpha = 0.35;
+    ctx.beginPath();
+    ctx.moveTo(-width * 0.35, -length * 0.15);
+    ctx.lineTo(width * 0.35, -length * 0.15);
+    ctx.lineTo(width * 0.15, -length * 0.65);
+    ctx.lineTo(-width * 0.15, -length * 0.65);
+    ctx.closePath();
+
+    const shine = ctx.createLinearGradient(0, -length * 0.15, 0, -length * 0.65);
+    shine.addColorStop(0, "rgba(255,255,255,0.9)");
+    shine.addColorStop(1, "rgba(255,255,255,0.0)");
+
+    ctx.fillStyle = shine;
+    ctx.fill();
+    ctx.restore();
+
     ctx.restore();
 }
 
@@ -49,7 +78,7 @@ function updateDigitalClock() {
     }
 }
 
-// ANALOGE KLOK — DEZE FUNCTIE IS ESSENTIEEL
+// Analoge klok
 function drawClock() {
     const now = new Date();
 
@@ -66,9 +95,29 @@ function drawClock() {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
 
-    drawHand(hrAngle, canvas.height * 0.22, 14);
-    drawHand(minAngle, canvas.height * 0.32, 10);
-    drawHand(secAngle, canvas.height * 0.38, 4);
+    // Ceremoniële wijzers
+    drawHand(hrAngle, canvas.height * 0.22, 22);
+    drawHand(minAngle, canvas.height * 0.32, 18);
+    drawHand(secAngle, canvas.height * 0.38, 10);
+
+    // Centrale gouden cirkel
+    ctx.beginPath();
+    ctx.arc(0, 0, canvas.height * 0.03, 0, Math.PI * 2);
+
+    const centerGradient = ctx.createRadialGradient(
+        0, 0, 0,
+        0, 0, canvas.height * 0.03
+    );
+    centerGradient.addColorStop(0, "#fff7d1");
+    centerGradient.addColorStop(0.5, "#e8c96a");
+    centerGradient.addColorStop(1, "#7a5a18");
+
+    ctx.fillStyle = centerGradient;
+    ctx.fill();
+
+    ctx.strokeStyle = "#f5e3a1";
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
     ctx.restore();
 
