@@ -79,49 +79,58 @@ function updateDigitalClock() {
 }
 
 // Analoge klok
-function drawClock() {
-    const now = new Date();
-
-    const sec = now.getSeconds();
-    const min = now.getMinutes();
-    const hr = now.getHours() % 12;
-
-    const secAngle = (Math.PI / 30) * sec;
-    const minAngle = (Math.PI / 30) * min + (Math.PI / 1800) * sec;
-    const hrAngle = (Math.PI / 6) * hr + (Math.PI / 360) * min;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+function drawHand(angle, length, width) {
     ctx.save();
-    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(angle);
 
-    // Ceremoniële wijzers
-    drawHand(hrAngle, canvas.height * 0.22, 22);
-    drawHand(minAngle, canvas.height * 0.32, 18);
-    drawHand(secAngle, canvas.height * 0.38, 10);
-
-    // Centrale gouden cirkel
+    // Klassieke slanke wijzer (stijl B)
     ctx.beginPath();
-    ctx.arc(0, 0, canvas.height * 0.03, 0, Math.PI * 2);
+    ctx.moveTo(-width * 0.30, 0);          // smallere basis
+    ctx.lineTo(width * 0.30, 0);
+    ctx.lineTo(width * 0.18, -length * 0.55);
+    ctx.lineTo(0, -length);                // lange elegante punt
+    ctx.lineTo(-width * 0.18, -length * 0.55);
+    ctx.closePath();
 
-    const centerGradient = ctx.createRadialGradient(
-        0, 0, 0,
-        0, 0, canvas.height * 0.03
-    );
-    centerGradient.addColorStop(0, "#fff7d1");
-    centerGradient.addColorStop(0.5, "#e8c96a");
-    centerGradient.addColorStop(1, "#7a5a18");
+    // Goud-gradient (rijk maar subtieler dan de brede versie)
+    const gradient = ctx.createLinearGradient(0, 0, 0, -length);
+    gradient.addColorStop(0, "#8a6a1f");   // warm oud goud
+    gradient.addColorStop(0.35, "#cfa93e");
+    gradient.addColorStop(0.65, "#f5d97c");
+    gradient.addColorStop(1, "#fff4c2");
 
-    ctx.fillStyle = centerGradient;
-    ctx.fill();
+    ctx.fillStyle = gradient;
 
+    // Gouden omlijning
     ctx.strokeStyle = "#f5e3a1";
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.8;
+
+    // Schaduw
+    ctx.shadowColor = "rgba(0,0,0,0.45)";
+    ctx.shadowBlur = 10;
+
+    ctx.fill();
     ctx.stroke();
 
+    // Glanslaag (3D highlight)
+    ctx.save();
+    ctx.globalAlpha = 0.35;
+    ctx.beginPath();
+    ctx.moveTo(-width * 0.18, -length * 0.20);
+    ctx.lineTo(width * 0.18, -length * 0.20);
+    ctx.lineTo(width * 0.08, -length * 0.60);
+    ctx.lineTo(-width * 0.08, -length * 0.60);
+    ctx.closePath();
+
+    const shine = ctx.createLinearGradient(0, -length * 0.20, 0, -length * 0.60);
+    shine.addColorStop(0, "rgba(255,255,255,0.9)");
+    shine.addColorStop(1, "rgba(255,255,255,0.0)");
+
+    ctx.fillStyle = shine;
+    ctx.fill();
     ctx.restore();
 
-    requestAnimationFrame(drawClock);
+    ctx.restore();
 }
 
 // Start alles
