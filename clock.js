@@ -16,11 +16,11 @@ function drawHand(angle, length, width, color) {
 
     // Antieke vorm: brede basis → smalle punt
     ctx.beginPath();
-    ctx.moveTo(-width * 0.4, 0);               // linker basis
-    ctx.lineTo(width * 0.4, 0);                // rechter basis
-    ctx.lineTo(width * 0.2, -length * 0.7);    // rechter midden
-    ctx.lineTo(0, -length);                    // punt
-    ctx.lineTo(-width * 0.2, -length * 0.7);   // linker midden
+    ctx.moveTo(-width * 0.4, 0);
+    ctx.lineTo(width * 0.4, 0);
+    ctx.lineTo(width * 0.2, -length * 0.7);
+    ctx.lineTo(0, -length);
+    ctx.lineTo(-width * 0.2, -length * 0.7);
     ctx.closePath();
 
     // Gouden antieke stijl
@@ -36,8 +36,8 @@ function drawHand(angle, length, width, color) {
     ctx.shadowBlur = 10;
 
     ctx.fill();
-    ctx.restore();   // ← JE VERGETEN REGEL
-}                    // ← SLUITEN VAN drawHand()
+    ctx.restore();   // ← DIT WAS JE VERGETEN
+}                    // ← EN DIT OOK
 
 // Digitale klok
 function updateDigitalClock() {
