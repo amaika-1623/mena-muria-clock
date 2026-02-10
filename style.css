@@ -31,11 +31,17 @@ body {
     bottom: 18vh;      /* hoger zodat hij zichtbaar wordt */
     width: 100%;
     text-align: center;
-    font-size: 8vw;    /* beter leesbaar */
+.digital-time {
+    position: fixed;
+    bottom: 12vh;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 8vw;
     color: white;
     font-weight: bold;
     text-shadow: 0 0 10px black;
-    z-index: 10;       /* boven alles */
+    z-index: 20;
 }
 
 #clockCanvas {
