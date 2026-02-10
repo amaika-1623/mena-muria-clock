@@ -28,15 +28,16 @@ body {
 }
 .digital-time {
     position: absolute;
-    bottom: 20vh;
+    bottom: 18vh;      /* hoger zodat hij zichtbaar wordt */
     width: 100%;
     text-align: center;
-    font-size: 8vw;
+    font-size: 8vw;    /* beter leesbaar */
     color: white;
     font-weight: bold;
     text-shadow: 0 0 10px black;
-    z-index: 10;
+    z-index: 10;       /* boven alles */
 }
+
 #clockCanvas {
     position: absolute;
     width: 90vw;
