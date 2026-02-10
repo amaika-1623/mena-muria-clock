@@ -44,6 +44,7 @@ body {
     position: absolute;
     width: 90vw;
     max-width: 500px;
+    z-index: 2;
 }
 
 #clockCanvas {
