@@ -37,3 +37,21 @@ function drawHand(angle, length, width, color) {
 
     ctx.fill();
     ctx.restore
+function updateDigitalClock() {
+    const now = new Date();
+
+    let hh = String(now.getHours()).padStart(2, "0");
+    let mm = String(now.getMinutes()).padStart(2, "0");
+    let ss = String(now.getSeconds()).padStart(2, "0");
+
+    const el = document.getElementById("digitalTime");
+    if (el) {
+        el.textContent = `${hh}:${mm}:${ss}`;
+    }
+}
+
+// update elke seconde
+setInterval(updateDigitalClock, 1000);
+
+// direct starten
+updateDigitalClock();
