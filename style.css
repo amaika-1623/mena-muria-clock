@@ -27,13 +27,8 @@ body {
     object-fit: cover;
 }
 .digital-time {
-    position: absolute;
-    bottom: 18vh;      /* hoger zodat hij zichtbaar wordt */
-    width: 100%;
-    text-align: center;
-.digital-time {
-    position: fixed;
-    bottom: 12vh;
+    position: fixed;      /* verankerd aan het scherm */
+    bottom: 12vh;         /* mooi boven de onderrand */
     left: 0;
     width: 100%;
     text-align: center;
@@ -41,7 +36,7 @@ body {
     color: white;
     font-weight: bold;
     text-shadow: 0 0 10px black;
-    z-index: 20;
+    z-index: 20;          /* boven alles */
 }
 
 #clockCanvas {
