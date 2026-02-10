@@ -45,7 +45,12 @@ body {
     max-height: 500px;
     z-index: 3;
 }
-
+.clock-face {
+    position: absolute;
+    width: 90vw;
+    max-width: 500px;
+    z-index: 2;
+}
 
 /* Clock container */
 .clock-container {
