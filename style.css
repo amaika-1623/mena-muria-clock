@@ -27,16 +27,16 @@ body {
     object-fit: cover;
 }
 .digital-time {
-    position: fixed;
-    bottom: 30vh;       /* veel hoger, zodat hij zichtbaar wordt */
+    position: fixed;      /* verankerd aan het scherm */
+    top: 5vh;             /* zet hem BOVEN de klok */
     left: 0;
     width: 100%;
     text-align: center;
-    font-size: 9vw;     /* goed leesbaar */
+    font-size: 9vw;
     color: white;
     font-weight: bold;
     text-shadow: 0 0 10px black;
-    z-index: 20;
+    z-index: 20;          /* boven alles */
 }
 #clockCanvas {
     position: absolute;
