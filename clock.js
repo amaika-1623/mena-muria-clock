@@ -36,7 +36,10 @@ function drawHand(angle, length, width, color) {
     ctx.shadowBlur = 10;
 
     ctx.fill();
-    ctx.restore
+    ctx.restore();   // ← JE VERGETEN REGEL
+}                    // ← SLUITEN VAN drawHand()
+
+// Digitale klok
 function updateDigitalClock() {
     const now = new Date();
 
