@@ -2,46 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mena Muria Ceremonial Clock</title>
 
+    <!-- CRITICAL: Fixes Edge Mobile zooming + ensures identical scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Mena Muria Clock</title>
+
+    <!-- Link to external CSS -->
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
 
-    <meta name="theme-color" content="#000000">
+    <!-- Clock script -->
+    <script defer src="clock.js"></script>
 </head>
 
 <body>
 
-    <div class="intro-screen">
-        <img src="intro.jpg" class="intro-image">
-        <audio id="introSound" src="tifa-intro.mp3"></audio>
+    <!-- Digital time -->
+    <div id="digital-time"></div>
+
+    <!-- Clock container -->
+    <div id="clock-container">
+        <img id="clockface" src="clockface.jpg" alt="Clock Face">
+
+        <!-- Analog hands -->
+        <div id="hour-hand" class="hand"></div>
+        <div id="minute-hand" class="hand"></div>
+        <div id="second-hand" class="hand"></div>
     </div>
-
-    <div class="clock-container">
-    <img src="clock-face.png" class="clock-face">
-    <canvas id="clockCanvas"></canvas>
-    <div id="digitalTime" class="digital-time"></div>
-    </div>
-
-    <script src="clock.js"></script>
-
-    <script>
-        window.addEventListener("load", () => {
-            const audio = document.getElementById("introSound");
-            audio.play().catch(() => {
-                console.log("Autoplay blocked — user interaction required.");
-            });
-
-            setTimeout(() => {
-                document.querySelector(".intro-screen").style.opacity = 0;
-            }, 4000);
-        });
-
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js");
-        }
-    </script>
 
 </body>
 </html>
