@@ -1,67 +1,58 @@
-body {
+/* Global reset + prevent scrolling or zooming */
+html, body {
     margin: 0;
     padding: 0;
-    background: black;
-    overflow: hidden;
-    font-family: sans-serif;
-}
-
-/* Intro screen full screen */
-.intro-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 1.5s ease;
-    z-index: 10;
-}
-
-.intro-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-}
-.digital-time {
-    position: fixed;      /* verankerd aan het scherm */
-    top: 5vh;             /* zet hem BOVEN de klok */
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 9vw;
-    color: white;
-    font-weight: bold;
-    text-shadow: 0 0 10px black;
-    z-index: 20;          /* boven alles */
-}
-#clockCanvas {
-    position: absolute;
-    width: 90vw;
-    height: 90vw;
-    max-width: 500px;
-    max-height: 500px;
-    z-index: 3;
-}
-.clock-face {
-    position: absolute;
-    width: 90vw;
-    max-width: 500px;
-    z-index: 2;
+    overflow: hidden;
+    background-color: black;
+    touch-action: none;
+    font-family: Arial, sans-serif;
 }
 
-/* Clock container */
-.clock-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+/* Digital time styling */
+#digital-time {
+    text-align: center;
+    font-size: 6vw;
+    color: gold;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+/* Center the clock perfectly on all devices */
+#clock-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-width: 500px;
+    height: auto;
+}
+
+/* Clockface image */
+#clockface {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+}
+
+/* Analog hands */
+.hand {
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background: gold;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 50%;
+    transform: rotate(0deg);
+    border-radius: 2px;
+}
+
+/* Second hand styling */
+#second-hand {
+    background: red;
+    height: 1.5px;
 }
