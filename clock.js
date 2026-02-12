@@ -9,7 +9,7 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-// ANTIEKE WIJZERS + RODE PUNT VOOR SECONDEWIJZER
+// ANTIEKE WIJZERS + RODE ANTIEKE PUNT VOOR SECONDEWIJZER
 function drawHand(angle, length, width, isSecond = false) {
     ctx.save();
     ctx.rotate(angle);
@@ -27,13 +27,25 @@ function drawHand(angle, length, width, isSecond = false) {
 
     // Secondewijzer = rode antieke punt
     if (isSecond) {
-        ctx.fillStyle = "#c40000"; // diep rood
+        ctx.fillStyle = "#c40000"; // diep antiek rood
         ctx.strokeStyle = "#ffb3b3"; // lichte rode rand
         ctx.lineWidth = 1.6;
+
         ctx.shadowColor = "rgba(0,0,0,0.35)";
         ctx.shadowBlur = 6;
+
         ctx.fill();
         ctx.stroke();
+
+        // Extra rode punt aan het uiteinde
+        ctx.beginPath();
+        ctx.arc(0, -length - (canvas.height * 0.015), canvas.height * 0.012, 0, Math.PI * 2);
+        ctx.fillStyle = "#c40000";
+        ctx.strokeStyle = "#ffcccc";
+        ctx.lineWidth = 1.4;
+        ctx.fill();
+        ctx.stroke();
+
     } else {
         // Antiek goud
         const gradient = ctx.createLinearGradient(0, 0, 0, -length);
