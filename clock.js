@@ -1,8 +1,7 @@
 // ===============================
-//   MENA MURIA CLOCK SCRIPT
+//   MENA MURIA CLOCK — LIVE MODE
 // ===============================
 
-// Update both digital and analog clock every second
 function updateClock() {
     const now = new Date();
 
@@ -31,7 +30,7 @@ function updateClock() {
         `rotate(${hourDeg}deg)`;
 }
 
-// Run immediately so the clock appears correct on load
+// Run immediately on load
 updateClock();
 
 // Update every second
