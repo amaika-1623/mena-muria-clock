@@ -1,3 +1,7 @@
+/* ================================
+   GLOBAL LAYOUT
+   ================================ */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -9,25 +13,41 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-/* Digital time styling */
+/* Digital time */
 #digital-time {
     text-align: center;
-    font-size: 5vw;
+    font-size: 6vw;
     color: gold;
-    margin-top: 1.5vh;
+    margin-top: 2vh;
     margin-bottom: 2vh;
-    letter-spacing: 2px;
 }
 
-/* Center the clock perfectly on all devices */
+/* ================================
+   CALIBRATION GUIDE LINE
+   (Remove after alignment)
+   ================================ */
+
+#guide-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: red;
+    z-index: 10;
+}
+
+/* ================================
+   CLOCK CONTAINER
+   ================================ */
+
 #clock-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80vw;
-    max-width: 350px;
-    height: auto;
+    width: 90vw;
+    max-width: 500px;
 }
 
 /* Clockface image */
@@ -38,21 +58,59 @@ html, body {
     pointer-events: none;
 }
 
-/* Analog hands */
+/* ================================
+   CLOCK HANDS — ANTIQUE STYLE
+   ================================ */
+
 .hand {
     position: absolute;
-    width: 50%;
-    height: 2px;
-    background: gold;
     top: 50%;
     left: 50%;
-    transform-origin: 0% 50%;
-    transform: rotate(0deg);
+    transform-origin: 0% 50%; /* pivot at center */
     border-radius: 2px;
+    margin-top: -1px; /* lifts hands slightly for perfect alignment */
 }
 
-/* Second hand styling */
+/* Hour hand — antique gold */
+#hour-hand {
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(to right, #8B7500, #FFD700);
+    box-shadow: 0 0 4px rgba(255, 215, 0, 0.6);
+    transform: rotate(90deg); /* pointing to 3 for calibration */
+}
+
+/* Minute hand — antique gold */
+#minute-hand {
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(to right, #8B7500, #FFD700);
+    box-shadow: 0 0 4px rgba(255, 215, 0, 0.6);
+    transform: rotate(270deg); /* pointing to 9 for calibration */
+}
+
+/* Second hand — red with bright red tip */
 #second-hand {
-    background: red;
-    height: 1.5px;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(to right, #B22222, #FF0000);
+    box-shadow: 0 0 3px rgba(255, 0, 0, 0.5);
+    transform: rotate(0deg);
+}
+
+/* ================================
+   OPTIONAL GOLD CENTER CAP
+   ================================ */
+
+#center-cap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #FFD700, #8B7500);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
 }
