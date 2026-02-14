@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
 
-    <!-- CRITICAL: Fixes Edge Mobile zooming + ensures identical scaling -->
+    <!-- Prevents zooming and fixes Edge Mobile scaling -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Mena Muria Clock</title>
 
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Clock script -->
     <script defer src="clock.js"></script>
 </head>
 
@@ -20,14 +17,20 @@
     <!-- Digital time -->
     <div id="digital-time"></div>
 
+    <!-- Calibration guide line (remove later if you want) -->
+    <div id="guide-line"></div>
+
     <!-- Clock container -->
     <div id="clock-container">
         <img id="clockface" src="clockface.jpg" alt="Clock Face">
 
-        <!-- Analog hands -->
+        <!-- Hands -->
         <div id="hour-hand" class="hand"></div>
         <div id="minute-hand" class="hand"></div>
         <div id="second-hand" class="hand"></div>
+
+        <!-- Optional gold center cap -->
+        <div id="center-cap"></div>
     </div>
 
 </body>
